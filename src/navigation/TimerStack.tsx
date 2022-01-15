@@ -10,7 +10,7 @@ type TimerStackProps = {};
 
 export type TimerStackParamList = {
   TimerConf: undefined;
-  Timer: undefined;
+  Timer: { rounds: number };
 };
 
 export type TimerStackNavProps<Screen extends keyof TimerStackParamList> =
