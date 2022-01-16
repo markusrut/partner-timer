@@ -1,7 +1,8 @@
 import React, { FC } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import useTimer from "../hooks/useTimer";
-import { TimeDisplay } from "./TimeDisplay";
+import { TimerControls } from "./TimerControls";
+import { TimerDisplay as TimerDisplay } from "./TimerDisplay";
 
 type TimerProps = {
   rounds: number;
@@ -12,18 +13,8 @@ export const Timer: FC<TimerProps> = ({ rounds }) => {
 
   return (
     <View style={styles.container}>
-      <TimeDisplay ms={timer.state.timeInMs} />
-      {timer.state.ticker ? (
-        <Button title="Pause" onPress={timer.stop} />
-      ) : (
-        <Button title="Play" onPress={timer.start} />
-      )}
-      {!timer.state.ticker && <Button title="Reset" onPress={timer.reset} />}
-      {timer.state.countUp && timer.state.ticker && (
-        <Button title="Count down" onPress={timer.countDown} />
-      )}
-
-      {timer.state.done && <Text>{timer.state.roundTimes}</Text>}
+      <TimerDisplay timer={timer} />
+      <TimerControls timer={timer} />
     </View>
   );
 };
@@ -33,18 +24,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  inputContainer: {
-    alignItems: "center",
-  },
-  input: {
-    height: 80,
-    width: 120,
-    fontSize: 48,
-    textAlign: "center",
-    borderRadius: 8,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
   },
 });

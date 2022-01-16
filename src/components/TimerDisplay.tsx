@@ -1,12 +1,13 @@
 import React, { FC } from "react";
 import { Text } from "react-native";
 import useThemeColor from "../hooks/useThemeColor";
+import { TimerModel, TimerState } from "../hooks/useTimer";
 
-type TimeDisplayProps = {
-  ms: number;
+type TimerDisplayProps = {
+  timer: TimerModel;
 };
 
-export const TimeDisplay: FC<TimeDisplayProps> = ({ ms }) => {
+export const TimerDisplay: FC<TimerDisplayProps> = ({ timer }) => {
   const textColor = useThemeColor("text");
 
   function formatTime(inputMs: number) {
@@ -28,5 +29,14 @@ export const TimeDisplay: FC<TimeDisplayProps> = ({ ms }) => {
       : `${secs}.${ms / 100}s`;
   }
 
-  return <Text style={{ color: textColor }}>{formatTime(ms)}</Text>;
+  return (
+    <>
+      <Text style={{ color: textColor }}>
+        Round {timer.state.currentRound}/{timer.state.maxRounds}
+      </Text>
+      <Text style={{ color: textColor }}>
+        {formatTime(timer.state.timeInMs)}
+      </Text>
+    </>
+  );
 };

@@ -1,6 +1,11 @@
 import { useReducer } from "react";
 
-type TimerState = {
+type TimerAction = {
+  type: "count" | "reset" | "time-round" | "set-ticker" | "remove-ticker";
+  ticker?: NodeJS.Timer | null;
+};
+
+export type TimerState = {
   maxRounds: number;
   currentRound: number;
   timeInMs: number;
@@ -9,12 +14,8 @@ type TimerState = {
   roundTimes: number[];
   done: boolean;
 };
-type TimerAction = {
-  type: "count" | "reset" | "time-round" | "set-ticker" | "remove-ticker";
-  ticker?: NodeJS.Timer | null;
-};
 
-type Timer = {
+export type TimerModel = {
   state: TimerState;
   start: () => void;
   stop: () => void;
@@ -22,7 +23,10 @@ type Timer = {
   countDown: () => void;
 };
 
-export default function useTimer(rounds: number, incrementInMs: number): Timer {
+export default function useTimer(
+  rounds: number,
+  incrementInMs: number
+): TimerModel {
   const initialState: TimerState = {
     timeInMs: 0,
     currentRound: 1,
